@@ -7,20 +7,34 @@
         <link href="/styles.css" rel="stylesheet" />
     </head>
     <body>
+        <nav>
     <button id="initbtn">Initialize</button>
     <button id="startbtn">Start</button>
-    <button id="clearcurrentids">Click if the amount of usernames don't equal the amount of current clients after you start game. All users will be affected. Use with caution. A common accident is rapidly refreshing your page.</button>
+    <button id="clearcurrentids">CLEAR IDS</button>
+</nav>
+<main>
+    <div id="memebox">
     <noscript>Go enable Javascript!</noscript>
+    <div id="imagebox"></div>
+    <div id="infobox"></div>
+<div class="clearfloat"></div>
+</div>
     <div id="output"></div>
-    <div id="leaderbox"></div>
-    <div id="userbox"></div>
-        <input type="text" id="captionbox"/>
-        <button id="captionsubmit">Submit Caption</button>
-    <div id="userscaptionssbox"></div>
+    <div id="submittedcaptions"></div>
+    <div id="chat">
         <input type="text" id="chatinput">
         <button id="chatsubmit">Send Chat</button>
-    <div id="chatbox"></div>
-    <div id="imagebox"></div>
+        <div id="chatbox"></div>
+    </div>
+    <div id="caption">
+        <div id="captioncontainer">
+            <input type="text" id="captionbox"/>
+            <button id="captionsubmit">Submit Caption</button>
+        </div>
+    </div>
+</div>
+</main>
     </body>
     <script src="/code.js"></script>
 </html>
+

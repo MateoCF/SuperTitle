@@ -99,7 +99,7 @@ io.on('connection', function(socket) {
             chatbasic( users.toString() + ' have joined' );
             chatbasic('Starting game with user ' + users[startingUserNumber]);
             chatbasic('Round ' + rounds);
-            io.to(ids[startingUserNumber]).emit('leader', { message: 'You are the leader', options: '' });
+            io.to(ids[startingUserNumber]).emit('leader', { message: 'You are the leader' });
             notifyUsers(ids, startingUserNumber, 'user', 'You are an user for this round');
             notifyUsers(ids, 0, 'toggleCaptionSubmit', false);
             sendRandomImage();
@@ -156,7 +156,6 @@ io.on('connection', function(socket) {
             chatbasic('Leader is now : ' + users[startingUserNumber]);
             io.to(ids[startingUserNumber]).emit('leader', { 
                 message: 'You are the leader', 
-                options: ''
             });
             sendRandomImage();
             notifyUsers(ids, startingUserNumber, 'user', 'You are an user for this round');
@@ -165,11 +164,10 @@ io.on('connection', function(socket) {
     });
 
     socket.on('captionsubmit', function(data) {
-       io.to(ids[startingUserNumber]).emit('leader', {
-          message: '',
-          options: '<button style="background: pink;" id="' + ids.indexOf(data.user) + '" onclick="leaderSelection(this.id)">' + data.caption + '</button>'
-       }); 
-       notifyUsers(ids, startingUserNumber, 'usercaptions', data.caption ); 
+       io.to(ids[startingUserNumber]).emit('captions', 
+          '<button style="background: pink;" id="' + ids.indexOf(data.user) + '" onclick="leaderSelection(this.id)">' + data.caption + '</button>'
+       ); 
+       notifyUsers(ids, startingUserNumber, 'captions', data.caption ); 
        io.to(socket.id).emit('toggleCaptionSubmit', true);
     });
     

@@ -1,19 +1,18 @@
 // Make connection
-var url = 'https://socketgame-mrmjcf.c9users.io/'
+var url = 'https://socketgame-mrmjcf.c9users.io/';
 var socket = io.connect(url);
 
 // Query DOM / Variables
 var output = document.getElementById('output'),
     initbtn = document.getElementById('initbtn'),
-    leaderbox = document.getElementById('leaderbox'),
-    userbox = document.getElementById('userbox'),
-    leaderselection = document.getElementById('leaderselection'),
+    leaderbox = document.getElementById('infobox'),
+    userbox = document.getElementById('infobox'),
     startbtn = document.getElementById('startbtn'),
     captionbox = document.getElementById('captionbox'),
     captionsubmit = document.getElementById('captionsubmit'),
     idClearButton = document.getElementById('clearcurrentids'),
     imagebox = document.getElementById('imagebox'),
-    userscaptionssbox = document.getElementById('userscaptionssbox'),
+    submittedcaptions = document.getElementById('submittedcaptions'),
     chatbox = document.getElementById('chatbox'),
     chatinput = document.getElementById('chatinput'),
     chatsubmit = document.getElementById('chatsubmit');
@@ -46,7 +45,7 @@ chatsubmit.addEventListener('click', function() {
 //Listen to events
 
 function leaderSelection(elementID) {
-   userscaptionssbox.innerHTML = '';
+   submittedcaptions.innerHTML = '';
    socket.emit('nextLeader', { userIndex: elementID });
    captionsubmit.style.pointerEvents = "pointer";
 }
@@ -64,17 +63,16 @@ socket.on('getUsername', function() {
 socket.on('leader', function(data){
    userbox.innerHTML = '';
    leaderbox.innerHTML += data.message;
-   leaderbox.innerHTML += data.options;
  });
 
 socket.on('user', function(data){
-   userscaptionssbox.innerHTML = '';
    leaderbox.innerHTML = '';
    userbox.innerHTML += data + "<br>";
 });
 
-socket.on('usercaptions', function(data) {
-    userscaptionssbox.innerHTML += data + "<br>";
+socket.on('captions', function(data) {
+    submittedcaptions.innerHTML = '';
+    submittedcaptions.innerHTML += data + "<br>";
 });
 
 socket.on('toggleCaptionSubmit', function(data) {
