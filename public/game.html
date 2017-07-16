@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Supertitle!</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,700" rel="stylesheet">
+        <link href="/styles.css" rel="stylesheet" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+    <div id="stats">
+        <span id="clearcurrentids">CLEAR IDS</span>
+        <span id="output"></span>
+    </div>
+    <nav>
+        <div id="navcontainer">
+            <img src="http://www.tomjewett.com/colors/rgb.jpg"> 
+            <button id="initbtn">Initialize</button>
+            <button id="startbtn">Start</button>
+        </div>
+    </nav>
+    <main>
+        <div id="memebox">
+            <noscript>Go enable Javascript!</noscript>
+            <div id="imagebox"><p>Waiting for starting game!</p></div>
+            <div id="infobox"></div>
+            <div class="clearfloat"></div>
+        </div>
+        <div id="submittedcaptions">Waiting for Supertitles!</div>
+        <div id="chat">
+            <div id="chatcontainer">
+                <button id="chatsubmit">Chat</button>
+                <input type="text" id="chatinput">
+                <div class="clearfloat"></div>
+            </div>
+            <div id="chatbox"></div>
+        </div>
+        <div id="caption">
+            <div id="captioncontainer">
+                <button id="captionsubmit">Supertitle</button>
+                <input type="text" id="captionbox"/>
+            </div>
+        </div>
+    </main>
+    </body>
+    <script src="/code.js"></script>
+</html>
+

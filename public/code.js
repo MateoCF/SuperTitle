@@ -5,8 +5,7 @@ var socket = io.connect(url);
 // Query DOM / Variables
 var output = document.getElementById('output'),
     initbtn = document.getElementById('initbtn'),
-    leaderbox = document.getElementById('infobox'),
-    userbox = document.getElementById('infobox'),
+    infobox = document.getElementById('infobox'),
     startbtn = document.getElementById('startbtn'),
     captionbox = document.getElementById('captionbox'),
     captionsubmit = document.getElementById('captionsubmit'),
@@ -61,17 +60,20 @@ socket.on('getUsername', function() {
 })
 
 socket.on('leader', function(data){
-   userbox.innerHTML = '';
-   leaderbox.innerHTML += data.message;
+   infobox.innerHTML = '';
+   infobox.innerHTML += data.message;
  });
 
 socket.on('user', function(data){
-   leaderbox.innerHTML = '';
-   userbox.innerHTML += data + "<br>";
+   infobox.innerHTML = '';
+   infobox.innerHTML += data + "<br>";
+});
+
+socket.on('newCaptions', function(data) {
+   submittedcaptions.innerHTML = '';
 });
 
 socket.on('captions', function(data) {
-    submittedcaptions.innerHTML = '';
     submittedcaptions.innerHTML += data + "<br>";
 });
 
@@ -93,16 +95,4 @@ socket.on('newImage', function(data){
 socket.on('chat', function(data) {
    chatbox.innerHTML += data + "<br>";
 });
-
-//\\3. CREATE Prevent users from making multiple captions | Client-side filter
-//4. CREATE Add sanitization all inputs and limits to length
-//6. CREATE Add username
-//\\7. CREATE Prevent users from interacting after game ended | #3 did that
-//8. CREATE Show users that have and havent sent their captions
-//9. MAYBE  Chat? FINISH THIS
-//10 CREATE gui
-//11.CREATE Namespaces and rooms
-//12.CREATE Instruction/Landing Page
-//13.MAYBE  Moderators and Admin? 
-//14.REVISE Revise code and make keywords more descriptive
 

@@ -39,6 +39,12 @@ const images = [
 'trump.jpg'
 ]
 
+
+app.get('/', function(req, res) {
+    res.sendFile(__dirname + '/public/rules.html');
+});
+
+
 io.on('connection', function(socket) {
 
 
@@ -53,7 +59,7 @@ io.on('connection', function(socket) {
         points = [0, 0, 0, 0, 0]; //Clear Previous Points
         gamestate = true; //Clear previous game
         io.sockets.emit('getID'); //Ask for socket.ids
-        io.sockets.emit('getUsername')
+        io.sockets.emit('getUsername');
     });
     
     //Retrieve IDs 
@@ -96,12 +102,13 @@ io.on('connection', function(socket) {
         } else {
             startingUserNumber = 0; 
             rounds = 1;
+            io.emit('newCaptions');
             chatbasic( users.toString() + ' have joined' );
             chatbasic('Starting game with user ' + users[startingUserNumber]);
             chatbasic('Round ' + rounds);
             io.to(ids[startingUserNumber]).emit('leader', { message: 'You are the leader' });
             notifyUsers(ids, startingUserNumber, 'user', 'You are an user for this round');
-            notifyUsers(ids, 0, 'toggleCaptionSubmit', false);
+            io.to(ids[0]).emit('toggleCaptionSubmit', true);
             sendRandomImage();
         }
     });
@@ -153,6 +160,7 @@ io.on('connection', function(socket) {
         
         // Next User
         if(gamestate !== false) {
+            io.emit('newCaptions');
             chatbasic('Leader is now : ' + users[startingUserNumber]);
             io.to(ids[startingUserNumber]).emit('leader', { 
                 message: 'You are the leader', 
@@ -165,9 +173,9 @@ io.on('connection', function(socket) {
 
     socket.on('captionsubmit', function(data) {
        io.to(ids[startingUserNumber]).emit('captions', 
-          '<button style="background: pink;" id="' + ids.indexOf(data.user) + '" onclick="leaderSelection(this.id)">' + data.caption + '</button>'
+          '<button class="caption" id="' + ids.indexOf(data.user) + '" onclick="leaderSelection(this.id)">' + data.caption + '</button>'
        ); 
-       notifyUsers(ids, startingUserNumber, 'captions', data.caption ); 
+       notifyUsers(ids, startingUserNumber, 'captions', '<span class="usercaption">' + data.caption + '</span>' ); 
        io.to(socket.id).emit('toggleCaptionSubmit', true);
     });
     
@@ -176,8 +184,10 @@ io.on('connection', function(socket) {
         if(username === undefined) {
             username = 'Anonymous';
         }
-        io.emit('chat', username + ': ' + data.message);
-    })
+        if(!data.message == "") {
+            io.emit('chat', username + ': ' + data.message);
+        }
+    });
     
     socket.on('clear', function(data) {
         io.emit('user', 'A user has disconnected everyone becuase they made a mistake. Please refresh the page');
@@ -194,3 +204,14 @@ io.on('connection', function(socket) {
 });
 
 
+//\\3. CREATE Prevent users from making multiple captions | Client-side filter
+//4. CREATE Add sanitization all inputs and limits to length
+//\\6. CREATE Add username
+//\\7. CREATE Prevent users from interacting after game ended | #3 did that
+//8. CREATE Show users that have and havent sent their captions
+//\\9. MAYBE  Chat? FINISH THIS | Slight grammatical fixes can be made
+//10 CREATE gui
+//11.CREATE Namespaces and rooms
+//12.CREATE Instruction/Landing Page
+//13.MAYBE  Moderators and Admin? 
+//14.REVISE Revise code and make keywords more descriptive
