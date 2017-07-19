@@ -52,7 +52,7 @@ table {
 }
 
 *:disabled {
-    background: #000;
+    background: #31393C;
     box-shadow: inset 0px 2px 12px -2px rgba(0,0,0,.25);
 }
 
@@ -76,6 +76,7 @@ nav {
     border: 2px solid #FF5A66;
     font-weight: 700;
     text-align: center;
+    z-index: 2;
 }
 
 #clearcurrentids, #output {
@@ -165,13 +166,25 @@ main {
     font-size: 30px;
 }
 
-#submittedcaptions {
+#submittedcaptions, #suggestions {
     margin: 50px 0;
     width: calc( 100% - 50px);
     min-height: 50px;
     box-shadow: 0px 2px 12px -2px rgba(0,0,0,0.75);
     padding: 25px;
     background: #5C7AFF;
+}
+
+#suggestions {
+    margin: 50px 0 100px 0;
+}
+
+#suggestionbox {
+    width: calc(100%- 50px);
+    min-height: 50px;
+    background: #31393C;
+    margin-top: 25px;
+    padding: 25px;
 }
 
 .caption {
@@ -297,7 +310,7 @@ main {
         padding: 20px;
     }
     
-    #submittedcaptions {
+    #submittedcaptions, #suggestions {
         width: 100%;
     }
     

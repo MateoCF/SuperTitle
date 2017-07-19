@@ -37,7 +37,36 @@ const images = [
 'spongebob.jpg', 
 'steph.jpg', 
 'trump.jpg'
-]
+];
+const buzzwords = [
+    'fam',
+    'boneless',
+    'hotdog',
+    'Trump',
+    'Hillary',
+    'cracking open a cold one',
+    'sick',
+    'Drinking away alcoholism',
+    'Autocorrect',
+    'Every car is self driving',
+    'F5 is so refreshing',
+    'fidget spinner',
+    "Andy's coming",
+    'The floor is lava',
+    'And thats the wayyyyyyyy the news goes',
+    'He protec, he attac, ',
+    "Perfect --- don't exist---",
+    'aw yeah Mr. Krabs',
+    "Yeah it's actually Supreme",
+    "CrossFit",
+    "Vegan",
+    "T R I G G E R E D",
+    "I hacked the mainframe",
+    "I cracked the system",
+    "Illumanati Confirmed",
+    "Did someone say...",
+    "one liek = 1 ",
+];
 
 
 app.get('/', function(req, res) {
@@ -96,6 +125,10 @@ io.on('connection', function(socket) {
         );
     }
 
+    function randomBuzzword() {
+        return buzzwords[Math.floor(Math.random() * buzzwords.length)]
+    }
+    
     socket.on('start', function() {
         if(ids.length >= maxGamePlayers) {
             io.emit('user', 'The maximum amount of users that can be in one game is ' + maxGamePlayers + '. Please disconnect some users' );
@@ -110,6 +143,14 @@ io.on('connection', function(socket) {
             notifyUsers(ids, startingUserNumber, 'user', 'You are an user for this round');
             io.to(ids[0]).emit('toggleCaptionSubmit', true);
             sendRandomImage();
+            notifyUsers(ids, startingUserNumber, 'suggest', 
+                '<ul>' + 
+                    '<li>' + randomBuzzword() + '</li><br>' + 
+                    '<li>' + randomBuzzword() + '</li><br>' + 
+                    '<li>' + randomBuzzword() + '</li><br>' + 
+                    '<li>' + randomBuzzword() + '</li><br>' + 
+                '</ul>'
+            );
         }
     });
     
@@ -166,6 +207,14 @@ io.on('connection', function(socket) {
                 message: 'You are the leader', 
             });
             sendRandomImage();
+            notifyUsers(ids, startingUserNumber, 'suggest', 
+                '<ul>' + 
+                    '<li>' + randomBuzzword() + '</li><br>' + 
+                    '<li>' + randomBuzzword() + '</li><br>' + 
+                    '<li>' + randomBuzzword() + '</li><br>' + 
+                    '<li>' + randomBuzzword() + '</li><br>' + 
+                '</ul>'
+            );
             notifyUsers(ids, startingUserNumber, 'user', 'You are an user for this round');
             notifyUsers(ids, startingUserNumber, 'toggleCaptionSubmit', false);
         }

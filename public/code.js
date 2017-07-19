@@ -14,7 +14,8 @@ var output = document.getElementById('output'),
     submittedcaptions = document.getElementById('submittedcaptions'),
     chatbox = document.getElementById('chatbox'),
     chatinput = document.getElementById('chatinput'),
-    chatsubmit = document.getElementById('chatsubmit');
+    chatsubmit = document.getElementById('chatsubmit'),
+    suggestionbox = document.getElementById('suggestionbox');
 
 
 // Emit events
@@ -71,6 +72,7 @@ socket.on('user', function(data){
 
 socket.on('newCaptions', function(data) {
    submittedcaptions.innerHTML = '';
+   suggestionbox.innerHTML = '';
 });
 
 socket.on('captions', function(data) {
@@ -96,3 +98,6 @@ socket.on('chat', function(data) {
    chatbox.innerHTML += data + "<br>";
 });
 
+socket.on('suggest', function(data){
+   suggestionbox.innerHTML += data;
+});
